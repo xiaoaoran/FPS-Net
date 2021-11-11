@@ -39,4 +39,4 @@ If you use this code, please cite:
 }
 ```
 ## Acknowledgement
-Part code borrow from [lidar-bonnetal](https://github.com/PRBonn/lidar-bonnetal), thanks for their sharing!
+Code borrowed heavily from [lidar-bonnetal](https://github.com/PRBonn/lidar-bonnetal), thanks for their sharing!
