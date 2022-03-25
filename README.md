@@ -39,7 +39,7 @@ If you use this code, please cite:
 }
 ```
 ## Acknowledgement
-Code borrowed heavily from [lidar-bonnetal](https://github.com/PRBonn/lidar-bonnetal), thanks for their sharing!
+Part of code is borrowed from [lidar-bonnetal](https://github.com/PRBonn/lidar-bonnetal), thanks for their sharing!
 ## Related Repos
 - [SynLiDAR: Learning From Synthetic LiDAR Sequential Point Cloud for Semantic Segmentation](https://github.com/xiaoaoran/SynLiDAR)
 - [Unsupervised Representation Learning for Point Clouds: A Survey](https://github.com/xiaoaoran/3d_url_survey)
