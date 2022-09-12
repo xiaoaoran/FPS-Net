@@ -13,17 +13,44 @@ cd /ROOT/
 pip install -r requirements.txt
 ```
 
+# Dataset
+Download SemanticKITTI dataset from [official website](http://www.semantic-kitti.org/)
+The dataset structure should be 
+```
+./
+├── 
+├── ...
+└── path_to_data_shown_in_config/
+      └── sequences
+            ├── 00/           
+            │   ├── velodyne/	
+            |   |	   ├── 000000.bin
+            |   |	   ├── 000001.bin
+            |   |	   └── ...
+            │   ├── labels/ 
+            |   |      ├── 000000.label
+            |   |      ├── 000001.label
+            |   |      └── ...
+            |   ├── calib.txt
+            |   ├── poses.txt
+            |   └── times.txt
+            └── 08/
+```
+
 ## Train
+Revise dataset path in train.sh and run
 ```
 cd /train/tasks/semantic
 sh train.sh
 ```
 
 ## Inference and Test
+Revise dataset path in train.sh and run
 ```
 cd /train/tasks/semantic
 sh test.sh
 ```
+We provide [pre-trained weights](https://drive.google.com/file/d/1I1S1MpsY2wT0Xu9qpZXcXczkxj2cPMXH/view?usp=sharing), you can download and check (SemanticKITTI: mIoU=57.1 over the testing set; 59.1 over the validation set).
 
 ## Citation
 If you use this code, please cite:
