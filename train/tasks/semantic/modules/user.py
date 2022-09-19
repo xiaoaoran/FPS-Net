@@ -135,16 +135,9 @@ class User():
             unproj_range = unproj_range.cuda()
 
         # compute output
-        proj_output, range_feat, zxy_feat, remission_feat = self.model(proj_in, proj_mask)
-        proj_in = proj_in[0]
-        np.save('08_108_range.npy', proj_in[0].cpu().numpy())
-        np.save('08_108_zxy.npy', proj_in[1:4].cpu().numpy())
-        np.save('08_108_remission.npy', proj_in[4].cpu().numpy())
-        np.save('08_108_range_feat.npy', range_feat.cpu().numpy())
-        np.save('08_108_zxy_feat.npy', zxy_feat.cpu().numpy())
-        np.save('08_108_remission_feat.npy', remission_feat.cpu().numpy())
+        proj_output = self.model(proj_in, proj_mask)
 
-        proj_argmax = proj_output[0].argmax(dim=0)
+        proj_argmax = proj_output.argmax(dim=0)
 
         if self.post:
           # knn postproc
