@@ -177,8 +177,7 @@ class Segmentator(nn.Module):
       assert(mask is not None)
       y = self.CRF(x, y, mask)
 
-   return y  # , range, zxy, remission
-   # return y, range, zxy, remission
+     return y
 
   def save_checkpoint(self, logdir, suffix=""):
     # Save the weights
