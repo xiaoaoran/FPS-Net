@@ -112,8 +112,6 @@ class User():
       start_time = time.time()
       count = 0
       for i, (proj_in, proj_mask, proj_labels, _, path_seq, path_name, p_x, p_y, proj_range, unproj_range, _, _, _, _, npoints) in enumerate(loader):
-        if path_name[0] != '000018.label':
-            continue
 
         count += proj_in.shape[0]
         # first cut to rela size (batch size one allows it)
