@@ -92,7 +92,6 @@ class Segmentator(nn.Module):
         w.requires_grad = False
 
     # print number of parameters and the ones requiring gradients
-    # print number of parameters and the ones requiring gradients
     weights_total = sum(p.numel() for p in self.parameters())
     weights_grad = sum(p.numel() for p in self.parameters() if p.requires_grad)
     print("Total number of parameters: ", weights_total)
@@ -165,16 +164,17 @@ class Segmentator(nn.Module):
 
   def forward(self, x, mask=None):
     y, skips = self.backbone(x)
-    y = self.decoder(y, skips) 
+    y = self.decoder(y, skips)
     y = self.head(y)
-    
+
     y = F.softmax(y, dim=1)
 
     if self.CRF:
       assert(mask is not None)
       y = self.CRF(x, y, mask)
 
-    return y
+    assert y.shape[0] == 1
+    return y[0]
 
   def save_checkpoint(self, logdir, suffix=""):
     # Save the weights
