@@ -50,7 +50,7 @@ Revise dataset path in train.sh and run
 cd /train/tasks/semantic
 sh test.sh
 ```
-We provide [pre-trained weights](https://drive.google.com/file/d/1I87-da32UlCTzoNG6kyVZwClYB5uR3x8/view?usp=sharing), you can download and check (SemanticKITTI: mIoU=57.1 over the testing set; 59.1 over the validation set).
+We provide [pre-trained weights](https://drive.google.com/file/d/11O89flPJis0eXwyZwZePNLOXVfY4LTsz/view?usp=share_link), you can download and check (SemanticKITTI: mIoU=57.1 over the testing set; 59.1 over the validation set).
 
 ## Citation
 If you use this code, please cite:
