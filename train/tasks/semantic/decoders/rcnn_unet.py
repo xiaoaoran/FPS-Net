@@ -1,5 +1,3 @@
-""" Parts of the U-Net model """
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -46,7 +44,6 @@ class Up(nn.Module):
             self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
         else:
             if up_W:
-                # self.up = nn.ConvTranspose2d(in_channels, in_channels, kernel_size=(1,2), stride=1)
                 self.up = nn.ConvTranspose2d(in_channels, out_channels, kernel_size=4, stride=2, padding=1)
             else:
                 self.up = nn.ConvTranspose2d(in_channels, out_channels, kernel_size=[1, 4], stride=[1, 2], padding=[0, 1])
@@ -54,17 +51,15 @@ class Up(nn.Module):
         self.dropout = nn.Dropout2d(p=0.2) if dropout else None
 
     def forward(self, x1, x2):
-        # pdb.set_trace()
         x1 = self.up(x1)
         x = torch.cat([x2, x1], dim=1)
-        # x = self.conv(x1) + x2
         x = self.conv(x)
         if self.dropout is not None:
             x = self.dropout(x)
         return x
 
 class Decoder(nn.Module):
-    def __init__(self, params, stub_skips, OS=32, feature_depth=1024, bilinear=False):
+    def __init__(self, bilinear=False):
         super(Decoder, self).__init__()
 
         self.bilinear = bilinear
@@ -81,7 +76,6 @@ class Decoder(nn.Module):
         print("Using RCNN decoder")
 
     def forward(self, x5, skips):
-        # pdb.set_trace()
         [x4, x3, x2, x1] = skips
         x = self.up1(x5, x4)
         x = self.up2(x, x3)
