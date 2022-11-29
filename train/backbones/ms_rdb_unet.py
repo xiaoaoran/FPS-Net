@@ -142,7 +142,7 @@ class Backbone(nn.Module):
         self.bn_d = params["bn_d"]
         self.OS = params["OS"]
         self.layers = params["extra"]["layers"]
-        print("Using ms_rdb_unet" + str(self.layers) + " Backbone")
+        print("Using ms_rdb_unet backbone")
 
         self.input_depth = 0
         self.input_idxs = []
