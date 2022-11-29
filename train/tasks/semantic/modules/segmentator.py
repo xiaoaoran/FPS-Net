@@ -164,14 +164,11 @@ class Segmentator(nn.Module):
       print("No path to pretrained, using random init.")
 
   def forward(self, x, mask=None):
-    # pdb.set_trace()
-    y, skips = self.backbone(x)  # x: [16, 5, 64, 1024]  y:[16, 1024, 64, 32] || skip存着每次变小前的feature map
-    y = self.decoder(y, skips)  # y:[16, 1024, 64, 32]
+    y, skips = self.backbone(x)
+    y = self.decoder(y, skips) 
     y = self.head(y)
-
-    # if self.ARCH["backbone"]["name"] != 'deeplabv3':
+    
     y = F.softmax(y, dim=1)
-
 
     if self.CRF:
       assert(mask is not None)
