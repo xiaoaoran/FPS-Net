@@ -1,9 +1,7 @@
 # encoding=utf-8
-""" Parts of the U-Net model """
 
 import torch
 import torch.nn as nn
-# import torch.nn.functional as F
 from common.context_block import ContextBlock
 
 import pdb
@@ -14,7 +12,6 @@ class RDBlock(nn.Module):
     self.layer_num = layer_num
     self.block_index = block_index
 
-    # self.global_conv = nn.Conv2d(inplanes, outplanes, kernel_size=3, stride=1, padding=1, bias=False)
     self.ms_conv = MultiScaleBlock(inplanes, outplanes)
 
     dim_list = [outplanes]
@@ -25,7 +22,6 @@ class RDBlock(nn.Module):
       in_dim = sum(dim_list)
       conv = nn.Sequential( nn.Conv2d(in_dim, in_dim, kernel_size=3, stride=1, padding=1, bias=False))
 
-      # conv = nn.Sequential(nn.Conv2d(inplanes*(i+1), inplanes*(i+1), kernel_size=3, stride=1, padding=1, bias=False))
       setattr(self, conv_name, conv)
       setattr(self, relu_name, nn.ReLU())
 
@@ -34,16 +30,7 @@ class RDBlock(nn.Module):
       self.local_conv = nn.Sequential(nn.Conv2d(in_dim, outplanes, kernel_size=1, stride=1, padding=0, bias=False),
                                       nn.ReLU())
 
-    # self.local_conv = nn.Sequential(nn.Conv2d(inplanes*4, outplanes, kernel_size=1, stride=1, padding=0, bias=False),
-    #                                 nn.ReLU())
-
-    # # GCnet Attention
-    # self.gc_att = ContextBlock(inplanes=outplanes, ratio=0.25)
-
   def forward(self, x):
-    # pdb.set_trace()
-    # global branch
-    # global_out = self.global_conv(x)
     x = self.ms_conv(x)
 
     global_out = x
@@ -69,7 +56,6 @@ class RDBlock(nn.Module):
     return out
 
 class MultiScaleBlock(nn.Module):
-    """multi-scale,插入不同位置"""
     def __init__(self, in_channels, out_channels):
         super().__init__()
         self.ms1 = nn.Conv2d(in_channels, out_channels, kernel_size=1, padding=0)
@@ -90,7 +76,6 @@ class MultiScaleBlock(nn.Module):
         x3 = self.ms3(x)
         x4 = self.ms4(x)
         x = torch.cat((x1, x2, x3, x4), dim=1)
-        # x = x1 + x2 + x3 + x4
 
         x = self.activate(x)
 
@@ -127,7 +112,6 @@ class Down(nn.Module):
         if not dropout:
             self.rdb = RDBlock(inplanes=in_channels, outplanes=in_channels, block_index=block_index)
             self.down = nn.Sequential(
-                # nn.MaxPool2d(kernel_size=2),
                 nn.Conv2d(in_channels, out_channels,
                           kernel_size=3, stride=stride, dilation=1, padding=1, bias=False),  # decrease shape, increase dim
                 nn.BatchNorm2d(out_channels, momentum=bn_d),
@@ -137,9 +121,6 @@ class Down(nn.Module):
             self.down = nn.Sequential(
                 nn.AvgPool2d(kernel_size=2),
                 nn.Conv2d(in_channels, out_channels, kernel_size=1),
-
-                # nn.Conv2d(in_channels, out_channels,
-                #           kernel_size=3, stride=stride, dilation=1, padding=1, bias=False),  # decrease shape, increase dim
                 nn.BatchNorm2d(out_channels, momentum=bn_d),
                 nn.ReLU(),
                 nn.Dropout2d(p=0.2)
@@ -147,7 +128,6 @@ class Down(nn.Module):
 
     def forward(self, x):
         skip = self.rdb(x)
-        # pdb.set_trace()
         down_x = self.down(skip)
         return down_x, skip
 
@@ -162,7 +142,7 @@ class Backbone(nn.Module):
         self.bn_d = params["bn_d"]
         self.OS = params["OS"]
         self.layers = params["extra"]["layers"]
-        print("Using distvary_ms_rdb_unet" + str(self.layers) + " Backbone")
+        print("Using ms_rdb_unet" + str(self.layers) + " Backbone")
 
         self.input_depth = 0
         self.input_idxs = []
@@ -177,8 +157,6 @@ class Backbone(nn.Module):
             self.input_idxs.append(4)
 
         dim = 32
-        # self.inc = DoubleConv(self.input_depth, dim)
-        # self.inc = MultiScaleBlock(self.input_depth, dim)
         self.inc_range = RDBlock(1, dim, block_index='range')
         self.inc_zxy = RDBlock(3, dim, block_index='zxy')
         self.inc_remission = RDBlock(1, dim, block_index='remission')
@@ -194,9 +172,6 @@ class Backbone(nn.Module):
 
         # last channels
         self.last_channels = dim * 16
-
-        # GCnet Attention
-        # self.gc_att = ContextBlock(inplanes=self.last_channels, ratio=0.25)
 
     def forward(self, x):
         range = x[:,0,:,:].unsqueeze(1)
