@@ -1,3 +1,5 @@
+""" Parts of the U-Net model """
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -59,7 +61,7 @@ class Up(nn.Module):
         return x
 
 class Decoder(nn.Module):
-    def __init__(self, bilinear=False):
+    def __init__(self, params, stub_skips, OS=32, feature_depth=1024, bilinear=False):
         super(Decoder, self).__init__()
 
         self.bilinear = bilinear
