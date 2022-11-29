@@ -112,7 +112,7 @@ if __name__ == '__main__':
   else:
     print("model folder doesnt exist! Can't infer...")
     quit()
-  # pdb.set_trace()
+  
   # create user and infer dataset
   user = User(ARCH, DATA, FLAGS.dataset, FLAGS.log, FLAGS.model, FLAGS.gpu, FLAGS.subset)
   user.infer()
