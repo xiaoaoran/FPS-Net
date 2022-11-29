@@ -45,7 +45,7 @@ sh train.sh
 ```
 
 ## Inference and Test
-Revise dataset path in train.sh and run
+Revise dataset path in test.sh and run
 ```
 cd /train/tasks/semantic
 sh test.sh
