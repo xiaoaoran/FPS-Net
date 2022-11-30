@@ -5,7 +5,6 @@ This part of the framework deals with the training of segmentation networks for 
 ## Tasks
 
 - [Semantic Segmentation](tasks/semantic).
-- [Panoptic Segmentation](tasks/panoptic) \[Soon\].
 
 ## Dependencies
 
