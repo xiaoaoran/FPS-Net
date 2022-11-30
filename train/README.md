@@ -1,4 +1,4 @@
-# LiDAR-Bonnetal Training
+# FPS-Net Training
 
 This part of the framework deals with the training of segmentation networks for point cloud data using range images.
 
