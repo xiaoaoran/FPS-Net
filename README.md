@@ -68,5 +68,6 @@ If you use this code, please cite:
 ## Acknowledgement
 Part of code is borrowed from [lidar-bonnetal](https://github.com/PRBonn/lidar-bonnetal), thanks for their sharing!
 ## Related Repos
-- [SynLiDAR: Learning From Synthetic LiDAR Sequential Point Cloud for Semantic Segmentation](https://github.com/xiaoaoran/SynLiDAR)
-- [Unsupervised Representation Learning for Point Clouds: A Survey](https://github.com/xiaoaoran/3d_url_survey)
+- [SynLiDAR: Learning From Synthetic LiDAR Sequential Point Cloud for Semantic Segmentation](https://github.com/xiaoaoran/SynLiDAR) (AAAI2022)
+- [Unsupervised Representation Learning for Point Clouds: A Survey](https://github.com/xiaoaoran/3d_url_survey) (TPAMI2023)
+- [3D Semantic Segmentation in the Wild: Learning Generalized Models for Adverse-Condition Point Clouds](https://github.com/xiaoaoran/SemanticSTF) (CVPR2023)
